@@ -25,6 +25,7 @@ white = colors["white"]
 black = colors["black"]
 blue = colors["blue"]
 green = colors["green"]
+red = colors["red"]
 
 choices = data["choices"]
 algo = data["algorithms"]

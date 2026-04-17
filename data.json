@@ -7,25 +7,28 @@
     "choices" : {
         "bubble" : 1 ,
         "selection" : 2 ,
-        "quick" : 3 ,
-        "merge" : 4
+        "insertion" : 3 ,
+        "quick" : 4 ,
+        "merge" : 5
     } , 
 
     "algorithms" : {
         "bubble" : [0 , 0] ,
-        "selection" : "None" , 
-        "quick" : "None" ,
-        "merge" : "None"
+        "selection" : [0 , 1] ,
+        "insertion" : [1 , 0] , 
+        "quick" : [0 , "?"] ,
+        "merge" : [0 , "?"]
     } ,
 
     "numbers" : {
-        "amount" : 10
+        "amount" : 50
     } ,
 
     "colors" : {
         "white" : [255 , 255 , 255] ,
         "black" : [0 , 0 , 0] ,
         "blue" : [135 , 206 , 235] ,
-        "green" : [0 , 255 , 0]
+        "green" : [0 , 255 , 0] ,
+        "red" : [255 , 69 , 0]
     }
 }

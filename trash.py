@@ -1,8 +1,11 @@
-def s(a , b):
-    a , b = b , a
-    
-a = 1
-b = 2
-s(a , b)
+import time
 
-print(b , a)
+start = time.time()
+for _ in range(1000):
+    pass
+print("time.time:", time.time() - start)
+
+start = time.perf_counter()
+for _ in range(1000):
+    pass
+print("perf_counter:", time.perf_counter() - start)
