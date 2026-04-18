@@ -28,4 +28,13 @@ green = colors["green"]
 red = colors["red"]
 
 choices = data["choices"]
-algo = data["algorithms"]
+
+choice_text = (
+    "Bubble sort: " ,
+    "Selection sort: " ,
+    "Insertion sort: " ,
+    "Quick sort: " ,
+    "Merge sort: " ,
+    "Bogo sort: " ,
+    "Tim sort: "
+)

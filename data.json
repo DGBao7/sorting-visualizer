@@ -9,19 +9,13 @@
         "selection" : 2 ,
         "insertion" : 3 ,
         "quick" : 4 ,
-        "merge" : 5
+        "merge" : 5 ,
+        "bogo" : 6 ,
+        "tim" : 7
     } , 
 
-    "algorithms" : {
-        "bubble" : [0 , 0] ,
-        "selection" : [0 , 1] ,
-        "insertion" : [1 , 0] , 
-        "quick" : [0 , "?"] ,
-        "merge" : [0 , "?"]
-    } ,
-
     "numbers" : {
-        "amount" : 50
+        "amount" : 100
     } ,
 
     "colors" : {

@@ -1,50 +1,50 @@
+import random
+
 def swap(a , b):
     return b , a
 
 class bubble:
-    def bubbleSort(numbers , i , j):          
-        if i >= len(numbers) - 1:
-            return numbers , i , j , True
-        
-        if j >= len(numbers) - i - 1:
-            return numbers , i + 1 , 0 , False
-        
-        if numbers[j] > numbers[j + 1]:
-            numbers[j] , numbers[j + 1] = swap(numbers[j] , numbers[j + 1])
-            
-        return numbers , i , j + 1 , False
+    def bubbleSort(numbers):          
+        for i in range(len(numbers) - 1):
+            for j in range(len(numbers) - i - 1):
+                if numbers[j] > numbers[j + 1]:
+                    numbers[j] , numbers[j + 1] = numbers[j + 1] , numbers[j]
+                    yield numbers[:] , i , j , False
+                    
+        yield numbers[:] , i , j , True
     
 class selection:
-    def selectionSort(numbers , i , j , min_index):
-        if i >= len(numbers) - 1:
-            return numbers , i , j , True , 0
-        
-        if j >= len(numbers):
-            if min_index != i:
-                numbers[i] , numbers[min_index] = swap(numbers[i] , numbers[min_index])
+    def selectionSort(numbers):
+        for i in range(len(numbers) - 1):
+            min_index = i
             
-            return numbers , i + 1 , i + 2 , False , i + 1
-        
-        if numbers[j] < numbers[min_index]:
-            min_index = j
+            for j in range(i + 1 , len(numbers)):
+                if numbers[j] < numbers[min_index]:
+                    min_index = j
+                    
+                yield numbers[:] , i , j , False
+                    
+            numbers[i] , numbers[min_index] = numbers[min_index] , numbers[i]
+            yield numbers[:] , i , j , False
             
-        return numbers , i , j + 1 , False , min_index
+        yield numbers[:] , i , j , True
+
     
 class insertion:
-    def insertionSort(numbers , i , j , key):
-        if i >= len(numbers):
-            return numbers , i , j , True , key
-        
-        if j >= 0 and numbers[j] > key:
-            numbers[j + 1] = numbers[j]
-            return numbers , i , j - 1 , False , key
-        else:
+    def insertionSort(numbers):
+        for i in range(1 , len(numbers)):
+            key = numbers[i]
+            j = i - 1
+            
+            while j >= 0 and numbers[j] > key:
+                numbers[j + 1] = numbers[j]
+                j -= 1
+                yield numbers[:] , i , j , False
+                
             numbers[j + 1] = key
-        
-        try:    
-            return numbers , i + 1 , i , False , numbers[i + 1]
-        except:
-            return numbers , i , j , True , key
+            yield numbers[:] , i , j , False
+            
+        yield numbers[:] , i , j , True
         
 class quick:
     def quickSort(numbers , left , right):
@@ -52,7 +52,9 @@ class quick:
             yield numbers[:] , left , right , False
             return
 
-        pivot = numbers[right]
+        index_pivot = (left + right) // 2
+        pivot = numbers[index_pivot]
+        numbers[index_pivot] , numbers[right] = numbers[right] , numbers[index_pivot]
         i = left - 1
         
         for j in range(left , right):
@@ -110,3 +112,80 @@ class Merge:
         yield from Merge.mergeSort(numbers , mid + 1 , right)
         
         yield from Merge.merge(numbers , left , mid , right)
+        
+class bogo:
+    def isSorted(numbers):
+        for j in range(len(numbers) - 1):
+            if numbers[j] > numbers[j + 1]:
+                return False
+            
+        return True
+            
+    def bogoSort(numbers):
+        while not bogo.isSorted(numbers):
+            random.shuffle(numbers)
+            yield numbers[:] , 0 , 0 , False
+            
+class tim:
+    def insertionSort(numbers , left , right):
+        for i in range(left + 1 , right + 1):
+            key = numbers[i]
+            j = i - 1
+
+            while j >= left and numbers[j] > key:
+                numbers[j + 1] = numbers[j]
+                j -= 1
+                yield numbers[:] , i , j , False
+
+            numbers[j + 1] = key
+            yield numbers[:] , i , j , False
+
+    def merge(numbers , l , m , r):
+        left = numbers[l : m + 1]
+        right = numbers[m + 1 : r + 1]
+
+        i , j , k = 0 , 0 , l
+
+        while i < len(left) and j < len(right):
+            if left[i] <= right[j]:
+                numbers[k] = left[i]
+                i += 1
+            else:
+                numbers[k] = right[j]
+                j += 1
+                
+            k += 1
+            yield numbers[:] , i , j , False
+
+        while i < len(left):
+            numbers[k] = left[i]
+            i += 1
+            k += 1
+            yield numbers[:] , i , j , False
+
+        while j < len(right):
+            numbers[k] = right[j]
+            j += 1
+            k += 1
+            yield numbers[:] , i , j , False
+
+
+    def timSort(numbers):
+        RUN = 32
+
+        for i in range(0 , len(numbers) , RUN):
+            yield from tim.insertionSort(numbers , i , min(i + RUN - 1 , len(numbers) - 1))
+
+        size = RUN
+
+        while size < len(numbers):
+            for left in range(0 , len(numbers) , 2 * size):
+                mid = min(len(numbers) - 1 , left + size - 1)
+                right = min((left + 2 * size - 1) , (len(numbers) - 1))
+
+                if mid < right:
+                    yield from tim.merge(numbers , left , mid , right)
+
+            size *= 2
+            
+        yield numbers[:] , i , 0 , True
